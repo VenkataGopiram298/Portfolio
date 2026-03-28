@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Venkata Gopi Ram Gonugunta — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #080808;
+    --white: #f5f0ea;
+    --cream: #e8e0d4;
+    --accent: #c8ff00;
+    --accent-dim: #a3cf00;
+    --mid: #1a1a1a;
+    --border: #2a2a2a;
+    --muted: #555;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed; top: 0; left: 0;
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed; top: 0; left: 0;
+    width: 36px; height: 36px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.5;
+    transition: transform 0.18s ease, opacity 0.2s;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 48px;
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: flex-end;
+    padding: 0 48px 80px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .hero-bg-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-display);
+    font-size: clamp(120px, 20vw, 280px);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200,255,0,0.06);
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
+    letter-spacing: -0.02em;
+    animation: drift 20s ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    from { transform: translate(-50%, -50%) rotate(-1deg); }
+    to { transform: translate(-50%, -48%) rotate(1deg); }
+  }
+  .hero-status {
+    position: absolute; top: 120px; right: 48px;
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .hero-status::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+
+  .hero-content { position: relative; z-index: 2; max-width: 900px; }
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(64px, 10vw, 140px);
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    margin-bottom: 32px;
+  }
+  h1 span { color: var(--accent); }
+  .hero-desc {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+  .hero-cta {
+    display: flex; gap: 16px; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid;
+    transition: all 0.25s;
+    cursor: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--black);
+    border-color: var(--accent);
+  }
+  .btn-primary:hover { background: transparent; color: var(--accent); }
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    border-color: var(--border);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-scroll {
+    position: absolute; bottom: 40px; right: 48px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 10px;
+    color: var(--muted); letter-spacing: 0.15em;
+    writing-mode: vertical-rl;
+  }
+  .hero-scroll::after {
+    content: '';
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--muted), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+
+  /* SECTIONS */
+  section { padding: 120px 48px; border-bottom: 1px solid var(--border); }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 60px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1; max-width: 80px;
+    height: 1px; background: var(--border);
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6vw, 80px);
+    line-height: 1;
+    letter-spacing: 0.01em;
+    margin-bottom: 64px;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 2px;
+  }
+  .skill-card {
+    background: var(--mid);
+    padding: 28px 24px;
+    border: 1px solid var(--border);
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .skill-card:hover { background: #111; border-color: var(--accent); }
+  .skill-card:hover::before { transform: scaleX(1); }
+  .skill-icon {
+    font-size: 24px; margin-bottom: 12px;
+    display: block;
+  }
+  .skill-name {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--white);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+  }
+  .skill-category {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    padding: 48px 0;
+    border-top: 1px solid var(--border);
+    transition: opacity 0.2s;
+  }
+  .exp-item:last-child { border-bottom: 1px solid var(--border); }
+  .exp-meta { }
+  .exp-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+  .exp-duration {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    margin-top: 8px;
+  }
+  .exp-body {}
+  .exp-company {
+    font-family: var(--font-display);
+    font-size: 40px;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .exp-role {
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 400;
+    margin-bottom: 20px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.05em;
+  }
+  .exp-desc {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 600px;
+    font-weight: 300;
+  }
+
+  /* CERTS */
+  .cert-row {
+    display: flex; flex-wrap: wrap; gap: 12px;
+  }
+  .cert-badge {
+    display: flex; align-items: center; gap: 12px;
+    border: 1px solid var(--border);
+    padding: 16px 24px;
+    transition: all 0.25s;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--cream);
+    letter-spacing: 0.05em;
+    background: var(--mid);
+  }
+  .cert-badge:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(200,255,0,0.04);
+  }
+  .cert-badge span { font-size: 20px; }
+
+  /* EDUCATION */
+  .edu-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  }
+  .edu-card {
+    background: var(--mid);
+    border: 1px solid var(--border);
+    padding: 40px;
+    transition: all 0.25s;
+  }
+  .edu-card:hover { border-color: var(--accent); }
+  .edu-year {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .edu-degree {
+    font-family: var(--font-display);
+    font-size: 28px;
+    color: var(--white);
+    margin-bottom: 8px;
+    line-height: 1.1;
+  }
+  .edu-institution {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* CONTACT */
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-blurb {
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.8;
+    font-weight: 300;
+    max-width: 440px;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 0; }
+  .contact-link {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--white);
+    transition: all 0.25s;
+    group: true;
+  }
+  .contact-link:first-child { border-top: 1px solid var(--border); }
+  .contact-link:hover { color: var(--accent); padding-left: 8px; }
+  .contact-link-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .contact-link-value {
+    font-size: 15px;
+    font-weight: 400;
+  }
+  .contact-link-arrow { font-size: 18px; opacity: 0.4; }
+  .contact-link:hover .contact-link-arrow { opacity: 1; }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero, section { padding-left: 24px; padding-right: 24px; }
+    .hero-status { right: 24px; }
+    .hero-scroll { display: none; }
+    .exp-item { grid-template-columns: 1fr; gap: 16px; }
+    .contact-inner { grid-template-columns: 1fr; }
+    .edu-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <div class="nav-logo">VGR</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-text">ENGINEER</div>
+  <div class="hero-status">Immediate Joinee</div>
+
+  <div class="hero-content reveal">
+    <p class="hero-tag">Senior System Engineer · Infosys · Hyderabad</p>
+    <h1>Venkata<br/>Gopi <span>Ram</span></h1>
+    <p class="hero-desc">Full-stack technologist with 3+ years at Infosys — spanning Cloud (Azure, AWS), DevOps, SQL, Python, Go, ServiceNow, PowerBI & more.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-primary">Get in Touch ↗</a>
+      <a href="#experience" class="btn btn-outline">View Experience</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">02 — Expertise</div>
+  <h2>Skills &amp;<br/>Technologies</h2>
+  <div class="skills-grid reveal">
+    <div class="skill-card"><span class="skill-icon">☁️</span><div class="skill-name">Microsoft Azure</div><div class="skill-category">Cloud</div></div>
+    <div class="skill-card"><span class="skill-icon">🌩️</span><div class="skill-name">Amazon AWS</div><div class="skill-category">Cloud</div></div>
+    <div class="skill-card"><span class="skill-icon">🐍</span><div class="skill-name">Python</div><div class="skill-category">Language</div></div>
+    <div class="skill-card"><span class="skill-icon">🗄️</span><div class="skill-name">SQL</div><div class="skill-category">Database</div></div>
+    <div class="skill-card"><span class="skill-icon">⚙️</span><div class="skill-name">DevOps</div><div class="skill-category">Infrastructure</div></div>
+    <div class="skill-card"><span class="skill-icon">☕</span><div class="skill-name">Core Java</div><div class="skill-category">Language</div></div>
+    <div class="skill-card"><span class="skill-icon">🐹</span><div class="skill-name">Go</div><div class="skill-category">Language</div></div>
+    <div class="skill-card"><span class="skill-icon">🔧</span><div class="skill-name">ServiceNow</div><div class="skill-category">Platform</div></div>
+    <div class="skill-card"><span class="skill-icon">📊</span><div class="skill-name">Power BI</div><div class="skill-category">Analytics</div></div>
+    <div class="skill-card"><span class="skill-icon">⚡</span><div class="skill-name">Power Automate</div><div class="skill-category">Automation</div></div>
+    <div class="skill-card"><span class="skill-icon">🧪</span><div class="skill-name">Manual Testing</div><div class="skill-category">QA</div></div>
+    <div class="skill-card"><span class="skill-icon">🔒</span><div class="skill-name">Cyber Security</div><div class="skill-category">Security</div></div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">03 — Work History</div>
+  <h2>Experience</h2>
+  <div class="exp-list reveal">
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-date">Jul 2024<br/>— Present</div>
+        <div class="exp-duration">~1 yr 9 mo</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-company">INFOSYS</div>
+        <div class="exp-role">Senior System Engineer</div>
+        <p class="exp-desc">Leading system engineering efforts in Hyderabad, delivering enterprise-grade solutions across cloud infrastructure (Azure, AWS), automation, and application development. Driving cross-functional collaboration under pressure with a focus on quality and reliability.</p>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-date">Jun 2022<br/>— Present</div>
+        <div class="exp-duration">3 yr 10 mo</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-company">INFOSYS</div>
+        <div class="exp-role">System Engineer</div>
+        <p class="exp-desc">Joined Infosys in Mysore and progressed through the engineering track. Worked across SQL, Python, DevOps, ServiceNow, and Power Platform — building scalable systems and automation solutions for enterprise clients.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-label">04 — Credentials</div>
+  <h2>Certifications</h2>
+  <div class="cert-row reveal">
+    <div class="cert-badge"><span>☁️</span>Microsoft Azure Fundamentals — AZ-900</div>
+    <div class="cert-badge"><span>🔧</span>Microsoft Azure Administrator — AZ-104</div>
+    <div class="cert-badge"><span>🔒</span>Cyber Security Awareness — Amazon</div>
+    <div class="cert-badge"><span>🐹</span>Go Language — Udemy</div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">05 — Academic</div>
+  <h2>Education</h2>
+  <div class="edu-grid reveal">
+    <div class="edu-card">
+      <div class="edu-year">2017 — 2021</div>
+      <div class="edu-degree">B.Tech<br/>ECE</div>
+      <div class="edu-institution">JNTUH College of Engineering, Hyderabad</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-year">2017 — 2021</div>
+      <div class="edu-degree">B.Tech<br/>ECE</div>
+      <div class="edu-institution">Sri Chaitanya Technical Campus</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">06 — Connect</div>
+  <h2>Let's Work<br/>Together</h2>
+  <div class="contact-inner reveal">
+    <p class="contact-blurb">I'm an immediate joinee, open to roles in cloud engineering, DevOps, automation, and full-stack development. Let's build something great.</p>
+    <div class="contact-links">
+      <a href="tel:9573893931" class="contact-link">
+        <div>
+          <div class="contact-link-label">Phone</div>
+          <div class="contact-link-value">+91 9573893931</div>
+        </div>
+        <div class="contact-link-arrow">↗</div>
+      </a>
+      <a href="mailto:ramgonuguta123@gmail.com" class="contact-link">
+        <div>
+          <div class="contact-link-label">Email</div>
+          <div class="contact-link-value">ramgonuguta123@gmail.com</div>
+        </div>
+        <div class="contact-link-arrow">↗</div>
+      </a>
+      <a href="https://www.linkedin.com/in/venkatagopi-ram-gonugunta-496889234" target="_blank" class="contact-link">
+        <div>
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-value">venkatagopi-ram-gonugunta</div>
+        </div>
+        <div class="contact-link-arrow">↗</div>
+      </a>
+      <a href="#" class="contact-link">
+        <div>
+          <div class="contact-link-label">Location</div>
+          <div class="contact-link-value">Karmanghat, Hyderabad, India</div>
+        </div>
+        <div class="contact-link-arrow">📍</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Venkata Gopi Ram Gonugunta</span>
+  <span>Senior System Engineer · Infosys · Hyderabad</span>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.transform = `translate(${mx-5}px,${my-5}px)`;
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) *.12;
+    ring.style.transform = `translate(${rx-18}px,${ry-18}px)`;
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  document.querySelectorAll('a, button, .skill-card, .cert-badge, .edu-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.transform += ' scale(2)'; ring.style.opacity = '1'; });
+    el.addEventListener('mouseleave', () => { cursor.style.transform; ring.style.opacity = '0.5'; });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => obs.observe(r));
+</script>
+</body>
+</html>
